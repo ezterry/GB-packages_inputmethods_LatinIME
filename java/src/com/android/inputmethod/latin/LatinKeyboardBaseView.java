@@ -551,9 +551,13 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         final boolean ignoreMultitouch = true;
         mGestureDetector = new GestureDetector(getContext(), listener, null, ignoreMultitouch);
         mGestureDetector.setIsLongpressEnabled(false);
-
-        mHasDistinctMultitouch = context.getPackageManager()
-                .hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT);
+        
+        if(res.getBoolean(R.bool.config_force_distinct_multitouch)){
+            mHasDistinctMultitouch = true;
+        } else {
+            mHasDistinctMultitouch = context.getPackageManager()
+                    .hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT);
+        }
         mKeyRepeatInterval = res.getInteger(R.integer.config_key_repeat_interval);
     }
 
